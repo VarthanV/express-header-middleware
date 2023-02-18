@@ -23,7 +23,7 @@ app.use(
         name: "foo",
         errorCode:"FOO",
         httpStatusCode:403, // optional, Default 400
-        regExp:new RegExp("\\w+") // optional , Default none
+        regExp:new RegExp("\\w+") // optional 
 
       },
 
