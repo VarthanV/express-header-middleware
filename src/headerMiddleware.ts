@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { getErrorMessage } from "./errors";
 import HttpStatusCode from "./statusCodes";
 import { Config, HeaderConfig } from "./types";
 
-const headerMiddleware = (config: Config): Function => {
+const headerMiddleware = (config: Config): RequestHandler => {
   return function (req: Request, res: Response, next: NextFunction) {
     validateHeaders(config.headers, req, res, next);
   };
@@ -18,18 +18,24 @@ function validateHeaders(
   for (const h of headersFromConfig) {
     const reqHeader = request.headers[`${h.name}`];
     if (!reqHeader) {
-      const errorMessage = getErrorMessage(h.name, "empty", h.errorCode || "");
+      const errorMessage = getErrorMessage(
+        h.name,
+        "empty",
+        h.errorCode || "",
+        h.regExp
+      );
       res
         .status(h.httpStatusCode || HttpStatusCode.BAD_REQUEST)
         .json(errorMessage);
       return;
     }
     if (h.regExp) {
-      if (typeof reqHeader == "string" && !h.regExp.test(reqHeader)) {
+      if (typeof reqHeader === "string" && !h.regExp.test(reqHeader)) {
         const errorMessage = getErrorMessage(
           h.name,
           "regexp",
-          h.errorCode || ""
+          h.errorCode || "",
+          h.regExp
         );
         res
           .status(h.httpStatusCode || HttpStatusCode.BAD_REQUEST)

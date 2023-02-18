@@ -4,7 +4,7 @@ export interface HeaderConfig {
   name: string | IncomingHttpHeaders;
   errorCode?: string;
   regExp?: RegExp;
-  httpStatusCode: number;
+  httpStatusCode?: number;
 }
 
 export interface Config {

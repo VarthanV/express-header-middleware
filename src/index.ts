@@ -1,3 +1,2 @@
-import headerMiddleware from "./headerMiddleware";
-
+import headerMiddleware from "./headerMiddleware"
 export default headerMiddleware;
