@@ -5,6 +5,7 @@
     "lib": ["es6"],                     
     "allowJs": true,
     "declaration": true,
+    "importHelpers": true,
     "outDir": "build",                          
     "rootDir": "src",
     "strict": true,         
